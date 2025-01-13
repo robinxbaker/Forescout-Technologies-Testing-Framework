@@ -25,18 +25,20 @@ class YahooFinancePage(BasePage):
         """
         Type text into the search bar and submit.
         """
-        search_bar_element = WebDriverWait(self.driver, 10).until(
+        # Use the `search_bar` descriptor to set the text
+        self.search_bar = text  # This triggers the `__set__` method in BasePageElement
+        
+        # Submit the search (this uses the already located element)
+        WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(YahooFinanceLocators.SEARCH_BAR)
-        )
-        search_bar_element.clear()
-        time.sleep(1)
-        search_bar_element.send_keys(text)
-        time.sleep(1)
-        search_bar_element.send_keys(Keys.ENTER)
+        ).send_keys(Keys.ENTER)
+
+        # Wait for the results to load
         WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(YahooFinanceLocators.DAILY_PRICE_CHANGE)
         )
         time.sleep(5)
+
 
     def get_daily_price_change(self):
         """
