@@ -6,6 +6,7 @@ from locator import YahooFinanceLocators
 from element import BasePageElement
 import time
 
+# Inheriting from object ensures that BasePage is a new-style class. All classes in python 3 are new-style, but this ensures that code is compatible with python 2.
 class BasePage(object):
     """Base class for all page objects"""
 
